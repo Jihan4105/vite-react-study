@@ -1,9 +1,16 @@
-function Profile() {
+import PropTypes from "prop-types";
+import Avatar from "./Avatar.jsx";
+
+function Profile({ person, size, isSepia, thickBorder }) {
   return (
-    <img
-      src="https://i.imgur.com/MK3eW3As.jpg"
-      alt="Katherine Johnson"
-    />
+    <div className="card">
+      <Avatar
+        person={person}
+        size={size}
+        isSepia={isSepia}
+        thickBorder={thickBorder}
+      />
+    </div>
   );
 }
 
@@ -16,4 +23,8 @@ export default function Gallery() {
       <Profile />
     </section>
   );
+}
+
+Profile.propTypes = {
+  person : PropTypes.object.isRequired
 }
