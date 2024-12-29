@@ -1,14 +1,19 @@
-export default function Avatar() {
+import PropTypes from "prop-types";
+
+export default function Avatar({ person, size }) {
   // const avatars = [
   //   {
+  //     id : "1",
   //     src : "https://i.imgur.com/7vQD0fPs.jpg",
   //     alt : "Gregorio Y. Zara"
   //   }, 
   //   {
+  //     id : "2",
   //     src : "https://i.imgur.com/yXOvdOSs.jpg",
   //     alt : "Hedy Lamarr"
   //   }, 
   //   {
+  //     id : "3",
   //     src : "https://i.imgur.com/MK3eW3As.jpg",
   //     alt : "Katherine Johnson"
   //   } 
@@ -16,28 +21,36 @@ export default function Avatar() {
 
   // const jsx = avatars.map((avatar) => {
   //   return (
-  //     ` 
-  //       <img 
-  //         className="avatar" 
-  //         src=${avatar.src} 
-  //         alt=${avatar.alt} 
-  //       />
-  //     `
+  //     <img 
+  //       key={avatar.id}
+  //       className="avatar" 
+  //       src={avatar.src} 
+  //       alt={avatar.alt} 
+  //     />
   //   )
-  // }).join("")
+  // })
+
+  // console.log(jsx)
 
   // return (
   //   jsx
   // );
 
-  const avatar = 'https://i.imgur.com/7vQD0fPs.jpg';
-  const description = 'Gregorio Y. Zara';
-  
+  const imgURL = "https://i.imgur.com/" + person.imageId + ".jpg"
+  console.log(size)
+
   return (
     <img
       className="avatar"
-      src={avatar}
-      alt={description}
+      src={imgURL}
+      alt="Lin Lanying"
+      width={size}
+      height={size}
     />
   );
+}
+
+Avatar.propTypes = {
+  person: PropTypes.object.isRequired,
+  size: PropTypes.number.isRequired
 }
