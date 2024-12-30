@@ -1,7 +1,13 @@
 @import url("./common.scss");
 
 #root {
-  .avatar {
-    border-radius: 50%;
+  .section {
+    ul {
+      li {
+        img {
+          border-radius: 50%;
+        }
+      }
+    }
   }
 }

@@ -1,28 +1,16 @@
-// import Gallery from "../js/Gallery.jsx";
-// import TodoList from "../js/Todos.jsx"
-// import Avatar from "../js/Avatar.jsx"
-// import Clock from "../js/Clock.jsx";
 import { createRoot } from "react-dom/client"
-import Gallery from "../js/Gallery.jsx";
-
-function Card({ children }) {
-  // console.log(children)
-
-  return (
-    <div className="card">
-      {children}
-      <div className="dodo">
-        HEHE
-      </div>
-    </div>
-  );
-}
+import React from "react";
+import FancyText from '../js/FancyText';
+import InspirationGenerator from "../js/inspirationGenerator";
+import Copyright from '../js/Copyright';
 
 createRoot(document.querySelector("#root")).render(
-  <section className="section">
-    {/* <TodoList /> */}
-    <>
-      <Gallery />
-    </>
-  </section>
+  // <React.StrictMode>
+    <section className="section">
+      <FancyText title text="Get Inspired App" />
+      <InspirationGenerator>
+        <Copyright year={2004} />
+      </InspirationGenerator>
+    </section>
+  // </React.StrictMode>
 )
