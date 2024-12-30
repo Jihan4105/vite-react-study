@@ -1,13 +1,7 @@
 @import url("./common.scss");
 
 #root {
-  .section {
-    ul {
-      li {
-        img {
-          border-radius: 50%;
-        }
-      }
-    }
+  h1 {
+    color: red;
   }
 }
