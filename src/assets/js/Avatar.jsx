@@ -56,6 +56,7 @@ import { getImageUrl } from "./utils.js";
 //   size: PropTypes.number.isRequired
 // }
 
+//person = obj, size = number
 export default function Avatar({ person, size }) {
   return (
     <img

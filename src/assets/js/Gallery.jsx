@@ -1,30 +1,60 @@
-import PropTypes from "prop-types";
-import Avatar from "./Avatar.jsx";
+import { getImageUrl } from './utils.js';
 
-function Profile({ person, size, isSepia, thickBorder }) {
+function Profile({ imgURL, name, profession, awards, discovered}) {
   return (
-    <div className="card">
-      <Avatar
-        person={person}
-        size={size}
-        isSepia={isSepia}
-        thickBorder={thickBorder}
-      />
-    </div>
-  );
+    <section className="profile">
+        <h2>{name}</h2>
+        <img
+          className="avatar"
+          src={imgURL}
+          alt={name}
+          width={70}
+          height={70}
+        />
+        <ul>
+          <li>
+            <b>Profession: </b>
+            {profession}
+          </li>
+          <li>
+            <b>Awards: {awards.length} </b>
+            ({awards.join(", ")})
+          </li>
+          <li>
+            <b>Discovered: </b>
+            {discovered}
+          </li>
+        </ul>
+      </section>
+  )
 }
 
 export default function Gallery() {
   return (
-    <section id="gallery-section">
-      <h1>Amazing scientists</h1>
-      <Profile />
-      <Profile />
-      <Profile />
-    </section>
+    <div>
+      <h1>Notable Scientists</h1>
+      <Profile 
+        imgURL={getImageUrl('szV5sdG')}
+        name="Maria Skłodowska-Curie"  
+        profession="physicist and chemist"
+        awards={[
+          "Nobel Prize in Physics", 
+          "Nobel Prize in Chemistry",
+          "Davy Medal",
+          "Matteucci Medal"
+        ]}
+        discovered="polonium (chemical element)"
+      />
+      <Profile 
+        imgURL={getImageUrl('YfeOqp2')}
+        name="Katsuko Saruhashi"  
+        profession="geochemist"
+        awards={[
+          "Miyake Prize for geochemistry", 
+          "Tanaka Prize"
+        ]}
+        discovered="a method for measuring carbon dioxide in seawater"
+      />
+    </div>
   );
-}
-
-Profile.propTypes = {
-  person : PropTypes.object.isRequired
 }
