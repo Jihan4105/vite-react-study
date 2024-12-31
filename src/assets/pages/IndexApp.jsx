@@ -1,184 +1,59 @@
 import { useState } from 'react';
 import { useImmer } from 'use-immer';
+import AddTodo from '../js/AddTodo.jsx';
+import TaskList from '../js/TaskList.jsx';
 
-export default function IndexApp() {
-  const [person, updatePerson] = useImmer({
-    name: 'Niki de Saint Phalle',
-    artwork: {
-      title: 'Blue Nana',
-      city: 'Hamburg',
-      image: 'https://i.imgur.com/Sd1AgUOm.jpg',
-    }
-  });
+let nextId = 3;
+const initialTodos = [
+  { id: 0, title: 'Buy milk', done: true },
+  { id: 1, title: 'Eat tacos', done: false },
+  { id: 2, title: 'Brew tea', done: false },
+];
 
-  //   function handleNameChange(e) {
-//     setPerson({
-//       ...person,
-//       name: e.target.value
-//     });
-//   }
+export default function TaskApp() {
+  const [todos, setTodos] = useImmer(
+    initialTodos
+  );
 
-  function handleNameChange(e) {
-    updatePerson(draft => {
-      console.log(draft)
-      debugger
-      draft.name = e.target.value;
-    });
+  function handleAddTodo(title) {
+    setTodos(draft => {
+      draft.push({
+        id: nextId++,
+        title: title,
+        done: false
+      })
+    })
   }
 
-  function handleTitleChange(e) {
-    updatePerson(draft => {
-      draft.artwork.title = e.target.value;
-    });
+  function handleChangeTodo(nextTodo) {
+    setTodos(draft => {
+      const index = draft.findIndex(t =>
+        t.id === nextTodo.id
+      );  
+      draft[index].title = nextTodo.title
+      draft[index].done = nextTodo.done
+    })
   }
 
-  function handleCityChange(e) {
-    updatePerson(draft => {
-      draft.artwork.city = e.target.value;
-    });
-  }
-
-  function handleImageChange(e) {
-    updatePerson(draft => {
-      draft.artwork.image = e.target.value;
-    });
+  function handleDeleteTodo(todoId) {
+    setTodos(draft => {
+      const index = draft.findIndex(t =>
+        t.id === todoId
+      );
+      draft.splice(index, 1);
+    })
   }
 
   return (
     <>
-      <label>
-        Name:
-        <input
-          value={person.name}
-          onChange={handleNameChange}
-        />
-      </label>
-      <label>
-        Title:
-        <input
-          value={person.artwork.title}
-          onChange={handleTitleChange}
-        />
-      </label>
-      <label>
-        City:
-        <input
-          value={person.artwork.city}
-          onChange={handleCityChange}
-        />
-      </label>
-      <label>
-        Image:
-        <input
-          value={person.artwork.image}
-          onChange={handleImageChange}
-        />
-      </label>
-      <p>
-        <i>{person.artwork.title}</i>
-        {' by '}
-        {person.name}
-        <br />
-        (located in {person.artwork.city})
-      </p>
-      <img
-        src={person.artwork.image}
-        alt={person.artwork.title}
+      <AddTodo
+        onAddTodo={handleAddTodo}
+      />
+      <TaskList
+        todos={todos}
+        onChangeTodo={handleChangeTodo}
+        onDeleteTodo={handleDeleteTodo}
       />
     </>
   );
 }
-
-// import { useState } from 'react';
-
-// export default function Form() {
-//   const [person, setPerson] = useState({
-//     name: 'Niki de Saint Phalle',
-//     artwork: {
-//       title: 'Blue Nana',
-//       city: 'Hamburg',
-//       image: 'https://i.imgur.com/Sd1AgUOm.jpg',
-//     }
-//   });
-
-//   function handleNameChange(e) {
-//     setPerson({
-//       ...person,
-//       name: e.target.value
-//     });
-//   }
-
-//   function handleTitleChange(e) {
-//     setPerson({
-//       ...person,
-//       artwork: {
-//         ...person.artwork,
-//         title: e.target.value
-//       }
-//     });
-//   }
-
-//   function handleCityChange(e) {
-//     setPerson({
-//       ...person,
-//       artwork: {
-//         ...person.artwork,
-//         city: e.target.value
-//       }
-//     });
-//   }
-
-//   function handleImageChange(e) {
-//     setPerson({
-//       ...person,
-//       artwork: {
-//         ...person.artwork,
-//         image: e.target.value
-//       }
-//     });
-//   }
-
-//   return (
-//     <>
-//       <label>
-//         Name:
-//         <input
-//           value={person.name}
-//           onChange={handleNameChange}
-//         />
-//       </label>
-//       <label>
-//         Title:
-//         <input
-//           value={person.artwork.title}
-//           onChange={handleTitleChange}
-//         />
-//       </label>
-//       <label>
-//         City:
-//         <input
-//           value={person.artwork.city}
-//           onChange={handleCityChange}
-//         />
-//       </label>
-//       <label>
-//         Image:
-//         <input
-//           value={person.artwork.image}
-//           onChange={handleImageChange}
-//         />
-//       </label>
-//       <p>
-//         <i>{person.artwork.title}</i>
-//         {' by '}
-//         {person.name}
-//         <br />
-//         (located in {person.artwork.city})
-//       </p>
-//       <img
-//         src={person.artwork.image}
-//         alt={person.artwork.title}
-//       />
-//     </>
-//   );
-// }
