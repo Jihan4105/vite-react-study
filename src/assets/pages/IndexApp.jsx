@@ -1,59 +1,49 @@
 import { useState } from 'react';
-import { useImmer } from 'use-immer';
-import AddTodo from '../js/AddTodo.jsx';
-import TaskList from '../js/TaskList.jsx';
+import ContactList from '../js/ContactList.jsx';
+import EditContact from '../js/EditContact.jsx';
 
-let nextId = 3;
-const initialTodos = [
-  { id: 0, title: 'Buy milk', done: true },
-  { id: 1, title: 'Eat tacos', done: false },
-  { id: 2, title: 'Brew tea', done: false },
-];
-
-export default function TaskApp() {
-  const [todos, setTodos] = useImmer(
-    initialTodos
+export default function IndexApp() {
+  const [
+    contacts,
+    setContacts
+  ] = useState(initialContacts);
+  const [
+    selectedId,
+    setSelectedId
+  ] = useState(0);
+  const selectedContact = contacts.find(c =>
+    c.id === selectedId
   );
 
-  function handleAddTodo(title) {
-    setTodos(draft => {
-      draft.push({
-        id: nextId++,
-        title: title,
-        done: false
-      })
-    })
-  }
-
-  function handleChangeTodo(nextTodo) {
-    setTodos(draft => {
-      const index = draft.findIndex(t =>
-        t.id === nextTodo.id
-      );  
-      draft[index].title = nextTodo.title
-      draft[index].done = nextTodo.done
-    })
-  }
-
-  function handleDeleteTodo(todoId) {
-    setTodos(draft => {
-      const index = draft.findIndex(t =>
-        t.id === todoId
-      );
-      draft.splice(index, 1);
-    })
+  function handleSave(updatedData) {
+    const nextContacts = contacts.map(c => {
+      if (c.id === updatedData.id) {
+        return updatedData;
+      } else {
+        return c;
+      }
+    });
+    setContacts(nextContacts);
   }
 
   return (
-    <>
-      <AddTodo
-        onAddTodo={handleAddTodo}
+    <div>
+      <ContactList
+        contacts={contacts}
+        selectedId={selectedId}
+        onSelect={id => setSelectedId(id)}
       />
-      <TaskList
-        todos={todos}
-        onChangeTodo={handleChangeTodo}
-        onDeleteTodo={handleDeleteTodo}
+      <hr />
+      <EditContact
+        initialData={selectedContact}
+        onSave={handleSave}
       />
-    </>
-  );
+    </div>
+  )
 }
+
+const initialContacts = [
+  { id: 0, name: 'Taylor', email: 'taylor@mail.com' },
+  { id: 1, name: 'Alice', email: 'alice@mail.com' },
+  { id: 2, name: 'Bob', email: 'bob@mail.com' }
+];
