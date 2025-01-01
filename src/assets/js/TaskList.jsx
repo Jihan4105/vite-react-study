@@ -1,18 +1,18 @@
 import { useState } from 'react';
 
 export default function TaskList({
-  todos,
-  onChangeTodo,
-  onDeleteTodo
+  tasks,
+  onChangeTask,
+  onDeleteTask
 }) {
   return (
     <ul>
-      {todos.map(todo => (
-        <li key={todo.id}>
+      {tasks.map(task => (
+        <li key={task.id}>
           <Task
-            todo={todo}
-            onChange={onChangeTodo}
-            onDelete={onDeleteTodo}
+            task={task}
+            onChange={onChangeTask}
+            onDelete={onDeleteTask}
           />
         </li>
       ))}
@@ -20,18 +20,18 @@ export default function TaskList({
   );
 }
 
-function Task({ todo, onChange, onDelete }) {
+function Task({ task, onChange, onDelete }) {
   const [isEditing, setIsEditing] = useState(false);
-  let todoContent;
+  let taskContent;
   if (isEditing) {
-    todoContent = (
+    taskContent = (
       <>
         <input
-          value={todo.title}
+          value={task.text}
           onChange={e => {
             onChange({
-              ...todo,
-              title: e.target.value
+              ...task,
+              text: e.target.value
             });
           }} />
         <button onClick={() => setIsEditing(false)}>
@@ -40,9 +40,9 @@ function Task({ todo, onChange, onDelete }) {
       </>
     );
   } else {
-    todoContent = (
+    taskContent = (
       <>
-        {todo.title}
+        {task.text}
         <button onClick={() => setIsEditing(true)}>
           Edit
         </button>
@@ -53,16 +53,16 @@ function Task({ todo, onChange, onDelete }) {
     <label>
       <input
         type="checkbox"
-        checked={todo.done}
+        checked={task.done}
         onChange={e => {
           onChange({
-            ...todo,
+            ...task,
             done: e.target.checked
           });
         }}
       />
-      {todoContent}
-      <button onClick={() => onDelete(todo.id)}>
+      {taskContent}
+      <button onClick={() => onDelete(task.id)}>
         Delete
       </button>
     </label>

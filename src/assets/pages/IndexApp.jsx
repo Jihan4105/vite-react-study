@@ -1,48 +1,38 @@
-import { useState } from 'react';
+import { useReducer } from 'react';
+import Chat from '../js/Chat.jsx';
 import ContactList from '../js/ContactList.jsx';
-import EditContact from '../js/EditContact.jsx';
+import {
+  initialState,
+  messengerReducer
+} from '../js/messengerReducer.js';
 
-export default function IndexApp() {
-  const [
-    contacts,
-    setContacts
-  ] = useState(initialContacts);
-  const [
-    selectedId,
-    setSelectedId
-  ] = useState(0);
-  const selectedContact = contacts.find(c =>
-    c.id === selectedId
+export default function Messenger() {
+  const [state, dispatch] = useReducer(
+    messengerReducer,
+    initialState
   );
-
-  function handleSave(updatedData) {
-    const nextContacts = contacts.map(c => {
-      if (c.id === updatedData.id) {
-        return updatedData;
-      } else {
-        return c;
-      }
-    });
-    setContacts(nextContacts);
-  }
-
+  const message = state.messages[state.selectedId];
+  const contact = contacts.find(c =>
+    c.id === state.selectedId
+  );
   return (
     <div>
       <ContactList
         contacts={contacts}
-        selectedId={selectedId}
-        onSelect={id => setSelectedId(id)}
+        selectedId={state.selectedId}
+        dispatch={dispatch}
       />
-      <hr />
-      <EditContact
-        initialData={selectedContact}
-        onSave={handleSave}
+      <Chat
+        key={contact.id}
+        message={message}
+        contact={contact}
+        dispatch={dispatch}
       />
     </div>
-  )
+  );
 }
 
-const initialContacts = [
+const contacts = [
   { id: 0, name: 'Taylor', email: 'taylor@mail.com' },
   { id: 1, name: 'Alice', email: 'alice@mail.com' },
   { id: 2, name: 'Bob', email: 'bob@mail.com' }

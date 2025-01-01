@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
-export default function EditContact({ initialData, onSave }) {
-  const [name, setName] = useState(initialData.name);
-  const [email, setEmail] = useState(initialData.email);
+export default function EditContact({ initialContacts, selectedContent, onSave }) {
+  const [name, setName] = useState(selectedContent.name);
+  const [email, setEmail] = useState(selectedContent.email);
   return (
     <section>
       <label>
@@ -23,7 +23,7 @@ export default function EditContact({ initialData, onSave }) {
       </label>
       <button onClick={() => {
         const updatedData = {
-          id: initialData.id,
+          id: selectedContent.id,
           name: name,
           email: email
         };
@@ -32,8 +32,8 @@ export default function EditContact({ initialData, onSave }) {
         Save
       </button>
       <button onClick={() => {
-        setName(initialData.name);
-        setEmail(initialData.email);
+        setName(selectedContent.name);
+        setEmail(selectedContent.email);
       }}>
         Reset
       </button>
