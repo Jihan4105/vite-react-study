@@ -1,39 +1,13 @@
-import { useReducer } from 'react';
-import Chat from '../js/Chat.jsx';
-import ContactList from '../js/ContactList.jsx';
-import {
-  initialState,
-  messengerReducer
-} from '../js/messengerReducer.js';
+import AddTask from '../js/AddTask.jsx';
+import TaskList from '../js/TaskList.jsx';
+import { TasksProvider } from '../js/TaskContext.jsx';
 
-export default function Messenger() {
-  const [state, dispatch] = useReducer(
-    messengerReducer,
-    initialState
-  );
-  const message = state.messages[state.selectedId];
-  const contact = contacts.find(c =>
-    c.id === state.selectedId
-  );
+export default function IndexApp() {
   return (
-    <div>
-      <ContactList
-        contacts={contacts}
-        selectedId={state.selectedId}
-        dispatch={dispatch}
-      />
-      <Chat
-        key={contact.id}
-        message={message}
-        contact={contact}
-        dispatch={dispatch}
-      />
-    </div>
+    <TasksProvider>
+      <h1>Day off in Kyoto</h1>
+      <AddTask />
+      <TaskList />
+    </TasksProvider>
   );
 }
-
-const contacts = [
-  { id: 0, name: 'Taylor', email: 'taylor@mail.com' },
-  { id: 1, name: 'Alice', email: 'alice@mail.com' },
-  { id: 2, name: 'Bob', email: 'bob@mail.com' }
-];
