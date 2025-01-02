@@ -1,11 +1,11 @@
 import { useState, useContext } from 'react';
-import { TasksDispatchContext } from './TaskContext.jsx';
+import { useTasksDispatch } from './TaskContext.jsx';
 
 let nextId = 3
 
 export default function AddTask() {
   const [text, setText] = useState('');
-  const dispatch = useContext(TasksDispatchContext)
+  const dispatch = useTasksDispatch()
   return (
     <>
       <input
